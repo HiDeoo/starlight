@@ -132,6 +132,8 @@ const { html, panels } = processPanels(panelHtml);
 		switchTab(newTab: HTMLAnchorElement | null | undefined, index: number, shouldSync = true) {
 			if (!newTab) return;
 
+			const previousNewTabOffset = newTab.offsetTop - window.scrollY;
+
 			// Mark all tabs as unselected and hide all tab panels.
 			this.tabs.forEach((tab) => {
 				tab.removeAttribute('aria-selected');
@@ -150,6 +152,7 @@ const { html, panels } = processPanels(panelHtml);
 			if (shouldSync) {
 				newTab.focus();
 				StarlightTabs.#syncTabs(this, newTab.textContent);
+				window.scrollTo({ top: newTab.offsetTop - previousNewTabOffset });
 			}
 		}
 
