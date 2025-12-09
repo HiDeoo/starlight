@@ -13,7 +13,7 @@ const faviconTypeMap = {
 export const FaviconSchema = () =>
 	z
 		.string()
-		.default('/favicon.svg')
+		.prefault('/favicon.svg')
 		.transform((favicon, ctx) => {
 			// favicon can be absolute or relative url
 			const { pathname } = new URL(favicon, 'https://example.com');
@@ -21,7 +21,7 @@ export const FaviconSchema = () =>
 
 			if (!isFaviconExt(ext)) {
 				ctx.addIssue({
-					code: z.ZodIssueCode.custom,
+					code: "custom",
 					message: 'favicon must be a .ico, .gif, .jpg, .png, or .svg file',
 				});
 

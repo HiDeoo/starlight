@@ -7,9 +7,9 @@ export const LogoConfigSchema = () =>
 				/** Source of the image file to use. */
 				src: z.string(),
 				/** Alternative text description of the logo. */
-				alt: z.string().default(''),
+				alt: z.string().prefault(''),
 				/** Set to `true` to hide the site title text and only show the logo. */
-				replacesTitle: z.boolean().default(false),
+				replacesTitle: z.boolean().prefault(false),
 			}),
 			z.object({
 				/** Source of the image file to use in dark mode. */
@@ -17,9 +17,9 @@ export const LogoConfigSchema = () =>
 				/** Source of the image file to use in light mode. */
 				light: z.string(),
 				/** Alternative text description of the logo. */
-				alt: z.string().default(''),
+				alt: z.string().prefault(''),
 				/** Set to `true` to hide the site title text and only show the logo. */
-				replacesTitle: z.boolean().default(false),
+				replacesTitle: z.boolean().prefault(false),
 			}),
 		])
 		.optional();

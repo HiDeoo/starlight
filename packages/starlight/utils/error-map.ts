@@ -4,7 +4,7 @@
  */
 
 import { AstroError } from 'astro/errors';
-import type { z } from 'astro:content';
+import { z } from "astro/zod";
 
 type TypeOrLiteralErrByPathEntry = {
 	code: 'invalid_type' | 'invalid_literal';

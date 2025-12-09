@@ -1,7 +1,7 @@
 import { z } from 'astro/zod';
 
 const badgeBaseSchema = z.object({
-	variant: z.enum(['note', 'danger', 'success', 'caution', 'tip', 'default']).default('default'),
+	variant: z.enum(['note', 'danger', 'success', 'caution', 'tip', 'default']).prefault('default'),
 	class: z.string().optional(),
 });
 
@@ -10,12 +10,12 @@ const badgeSchema = badgeBaseSchema.extend({
 });
 
 const i18nBadgeSchema = badgeBaseSchema.extend({
-	text: z.union([z.string(), z.record(z.string())]),
+	text: z.union([z.string(), z.record(z.string(), z.string())]),
 });
 
 export const BadgeComponentSchema = badgeSchema
 	.extend({
-		size: z.enum(['small', 'medium', 'large']).default('small'),
+		size: z.enum(['small', 'medium', 'large']).prefault('small'),
 	})
 	.passthrough();
 

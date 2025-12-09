@@ -28,7 +28,7 @@ const LocaleSchema = z.object({
 	dir: z
 		.enum(['rtl', 'ltr'])
 		.optional()
-		.default('ltr')
+		.prefault('ltr')
 		.describe(
 			'The writing direction of this language; `"ltr"` for left-to-right (the default) or `"rtl"` for right-to-left.'
 		),
@@ -71,10 +71,10 @@ const UserConfigSchema = z.object({
 	editLink: z
 		.object({
 			/** Set the base URL for edit links. The final link will be `baseUrl` + the current page path. */
-			baseUrl: z.string().url().optional(),
+			baseUrl: z.url().optional(),
 		})
 		.optional()
-		.default({}),
+		.prefault({}),
 
 	/** Configure locales for internationalization (i18n). */
 	locales: z
@@ -97,7 +97,7 @@ const UserConfigSchema = z.object({
 				// Error if parsing the language tag failed.
 				if (!normalizedLang) {
 					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
+						code: "custom",
 						message: `Could not validate language tag "${lang}" at locales.${key}.lang.`,
 					});
 					return z.NEVER;
@@ -167,7 +167,7 @@ const UserConfigSchema = z.object({
 		.string()
 		.array()
 		.optional()
-		.default([])
+		.prefault([])
 		.superRefine((paths, ctx) => {
 			const invalidPathRegex = /^\.?\/public\/.+$/;
 			const invalidPaths = paths.filter((path) => invalidPathRegex.test(path));
@@ -185,13 +185,13 @@ const UserConfigSchema = z.object({
 	/** Define if the last update date should be visible in the page footer. */
 	lastUpdated: z
 		.boolean()
-		.default(false)
+		.prefault(false)
 		.describe('Define if the last update date should be visible in the page footer.'),
 
 	/** Define if the previous and next page links should be visible in the page footer. */
 	pagination: z
 		.boolean()
-		.default(true)
+		.prefault(true)
 		.describe('Define if the previous and next page links should be visible in the page footer.'),
 
 	/** The default favicon for your site which should be a path to an image in the `public/` directory. */
@@ -220,23 +220,23 @@ const UserConfigSchema = z.object({
 	/** Will be used as title delimiter in the generated `<title>` tag. */
 	titleDelimiter: z
 		.string()
-		.default('|')
+		.prefault('|')
 		.describe('Will be used as title delimiter in the generated `<title>` tag.'),
 
 	/** Disable Starlight's default 404 page. */
-	disable404Route: z.boolean().default(false).describe("Disable Starlight's default 404 page."),
+	disable404Route: z.boolean().prefault(false).describe("Disable Starlight's default 404 page."),
 
 	/**
 	 * Define whether Starlight pages should be prerendered or not.
 	 * Defaults to always prerender Starlight pages, even when the project is
 	 * set to "server" output mode.
 	 */
-	prerender: z.boolean().default(true),
+	prerender: z.boolean().prefault(true),
 
 	/** Enable displaying a “Built with Starlight” link in your site’s footer. */
 	credits: z
 		.boolean()
-		.default(false)
+		.prefault(false)
 		.describe('Enable displaying a “Built with Starlight” link in your site’s footer.'),
 
 	/** Add middleware to process Starlight’s route data for each page. */
@@ -244,7 +244,7 @@ const UserConfigSchema = z.object({
 		.string()
 		.transform((string) => [string])
 		.or(z.string().array())
-		.default([])
+		.prefault([])
 		.superRefine((middlewares, ctx) => {
 			// Regex pattern to match invalid middleware paths: https://regex101.com/r/kQH7xm/2
 			const invalidPathRegex = /^\.?\/src\/middleware(?:\/index)?\.[jt]s$/;
@@ -268,7 +268,7 @@ const UserConfigSchema = z.object({
 			/** Define whether headings in content should be rendered with clickable anchor links. Default: `true`. */
 			headingLinks: z
 				.boolean()
-				.default(true)
+				.prefault(true)
 				.describe(
 					'Define whether headings in content should be rendered with clickable anchor links. Default: `true`.'
 				),
@@ -281,12 +281,12 @@ const UserConfigSchema = z.object({
 			processedDirs: z
 				.string()
 				.array()
-				.default([])
+				.prefault([])
 				.describe(
 					'Define additional directories where files should be processed by Starlight’s Markdown pipeline. Default: `[]`.'
 				),
 		})
-		.default({})
+		.prefault({})
 		.describe('Configure features that impact Starlight’s Markdown processing.'),
 });
 

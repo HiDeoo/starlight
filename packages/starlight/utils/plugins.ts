@@ -183,12 +183,12 @@ export function injectPluginTranslationsTypes(
 // https://github.com/withastro/astro/blob/910eb00fe0b70ca80bd09520ae100e8c78b675b5/packages/astro/src/core/config/schema.ts#L113
 const astroIntegrationSchema = z.object({
 	name: z.string(),
-	hooks: z.object({}).passthrough().default({}),
+	hooks: z.looseObject({}).prefault({}),
 }) as z.Schema<AstroIntegration>;
 
 const routeMiddlewareConfigSchema = z.object({
 	entrypoint: z.string(),
-	order: z.enum(['pre', 'post', 'default']).default('default'),
+	order: z.enum(['pre', 'post', 'default']).prefault('default'),
 });
 
 const baseStarlightPluginSchema = z.object({
@@ -230,7 +230,7 @@ const configSetupHookSchema = z
 				 */
 				updateConfig: z.function(
 					z.tuple([
-						z.record(z.any()) as z.Schema<Partial<Omit<StarlightUserConfig, 'routeMiddleware'>>>,
+						z.record(z.string(), z.any()) as z.Schema<Partial<Omit<StarlightUserConfig, 'routeMiddleware'>>>,
 					]),
 					z.void()
 				),
@@ -415,12 +415,12 @@ const starlightPluginSchema = baseStarlightPluginSchema
 	.superRefine((plugin, ctx) => {
 		if (!plugin.hooks['config:setup'] && !plugin.hooks.setup) {
 			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
+				code: "custom",
 				message: 'A plugin must define at least a `config:setup` hook.',
 			});
 		} else if (plugin.hooks['config:setup'] && plugin.hooks.setup) {
 			ctx.addIssue({
-				code: z.ZodIssueCode.custom,
+				code: "custom",
 				message:
 					'A plugin cannot define both a `config:setup` and `setup` hook. ' +
 					'As `setup` is deprecated and will be removed in a future version, ' +
@@ -429,7 +429,7 @@ const starlightPluginSchema = baseStarlightPluginSchema
 		}
 	});
 
-const starlightPluginsConfigSchema = z.array(starlightPluginSchema).default([]);
+const starlightPluginsConfigSchema = z.array(starlightPluginSchema).prefault([]);
 
 type StarlightPluginsUserConfig = z.input<typeof starlightPluginsConfigSchema>;
 

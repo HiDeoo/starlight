@@ -19,13 +19,13 @@ export const HeroSchema = ({ image }: SchemaContext) =>
 			.union([
 				z.object({
 					/** Alt text for screenreaders and other assistive technologies describing your hero image. */
-					alt: z.string().default(''),
+					alt: z.string().prefault(''),
 					/** Relative path to an image file in your repo, e.g. `../../assets/hero.png`. */
 					file: image(),
 				}),
 				z.object({
 					/** Alt text for screenreaders and other assistive technologies describing your hero image. */
-					alt: z.string().default(''),
+					alt: z.string().prefault(''),
 					/** Relative path to an image file in your repo to use in dark mode, e.g. `../../assets/hero-dark.png`. */
 					dark: image(),
 					/** Relative path to an image file in your repo to use in light mode, e.g. `../../assets/hero-light.png`. */
@@ -47,7 +47,7 @@ export const HeroSchema = ({ image }: SchemaContext) =>
 				/** Value for the link’s `href` attribute, e.g. `/page` or `https://mysite.com`. */
 				link: z.string(),
 				/** Button style to use. One of `primary` (the default), `secondary`, or `minimal`. */
-				variant: z.enum(['primary', 'secondary', 'minimal']).default('primary'),
+				variant: z.enum(['primary', 'secondary', 'minimal']).prefault('primary'),
 				/**
 				 * An optional icon to display alongside the link text.
 				 * Can be an inline `<svg>` or the name of one of Starlight’s built-in icons.
@@ -62,8 +62,8 @@ export const HeroSchema = ({ image }: SchemaContext) =>
 					})
 					.optional(),
 				/** HTML attributes to add to the link */
-				attrs: z.record(z.union([z.string(), z.number(), z.boolean()])).optional(),
+				attrs: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
 			})
 			.array()
-			.default([]),
+			.prefault([]),
 	});

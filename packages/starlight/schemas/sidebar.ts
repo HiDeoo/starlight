@@ -8,7 +8,7 @@ const SidebarBaseSchema = z.object({
 	/** The visible label for this item in the sidebar. */
 	label: z.string(),
 	/** Translations of the `label` for each supported language. */
-	translations: z.record(z.string()).default({}),
+	translations: z.record(z.string(), z.string()).prefault({}),
 	/** Adds a badge to the item */
 	badge: I18nBadgeConfigSchema(),
 });
@@ -23,14 +23,14 @@ const SidebarGroupSchema = SidebarBaseSchema.extend({
 	 */
 	attrs: z.never().optional(),
 	/** Whether this item should be collapsed by default. */
-	collapsed: z.boolean().default(false),
+	collapsed: z.boolean().prefault(false),
 });
 
 // HTML attributes that can be added to an anchor element, validated as
 // `Record<string, string | number | boolean | undefined>` but typed as `HTMLAttributes<'a'>`
 // for user convenience.
 const linkHTMLAttributesSchema = z.record(
-	z.union([z.string(), z.number(), z.boolean(), z.undefined(), z.null()])
+	z.string(), z.union([z.string(), z.number(), z.boolean(), z.undefined(), z.null()])
 ) as z.Schema<Omit<HTMLAttributes<'a'>, keyof AstroBuiltinAttributes | 'children'>>;
 export type LinkHTMLAttributes = z.infer<typeof linkHTMLAttributesSchema>;
 
