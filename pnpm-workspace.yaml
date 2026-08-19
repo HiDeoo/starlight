@@ -25,3 +25,5 @@ peerDependencyRules:
 
 # Prevent installing packages published in the last 3 days
 minimumReleaseAge: 4320
+minimumReleaseAgeExclude:
+  - prettier-plugin-astro@1.0.0-beta.1
