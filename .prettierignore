@@ -12,6 +12,7 @@
 
 # Files
 pnpm-lock.yaml
+**/CHANGELOG.md
 
 # Test snapshots
 **/__tests__/**/snapshots
