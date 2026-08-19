@@ -8,7 +8,9 @@ const El = href ? 'a' : 'span';
 
 <li class="not-content sl-flex">
 	<El class="media-card sl-flex" {href}>
-		<div class="media"><slot name="media" /></div>
+		<div class="media">
+			<slot name="media" />
+		</div>
 		<slot />
 	</El>
 </li>

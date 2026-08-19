@@ -6,7 +6,9 @@ interface Props {
 const { minColumnWidth, gap } = Astro.props;
 ---
 
-<ul class="fluid-grid"><slot /></ul>
+<ul class="fluid-grid">
+	<slot />
+</ul>
 
 <style define:vars={{ minColumnWidth, gap }}>
 	.fluid-grid {
